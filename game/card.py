@@ -13,9 +13,16 @@ class Card:
         Arg:
             self (Card): An instance of card.
         """
-        self.card_num = 0
+        self.card_num = random.randint(1, 13)
+        self.last_card = 0
 
-    def suffle(self):
+    def next_card(self):
         """Generates a random card from 1 to 13 to the dealer to show.
         """
         self.card_num = random.randint(1, 13)
+        return self.card_num
+
+    def shuffle(self):
+        """This method keep the current card as last card."""
+
+        self.last_card = self.card_num
