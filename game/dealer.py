@@ -1,25 +1,7 @@
-import random
 
-class Card:
-    """A pice of paper or plastic that have a number on it.
 
-    The responsability of a Card is to keep a number between 1-13.
-    
-    Attributes:
-        card_num (int): The number that is on the card"""
-    
-    def __init__(self):
-        """Construct a new instance of Card.
-        Arg:
-            self (Card): An instance of card.
-        """
-        self.card_num = 0
+from cse210.game.card import Card
 
-    def suffle(self):
-        """Generates a random card from 1 to 13 to the dealer to show.
-        """
-        self.card_num = random.randint(1, 13)
-        return self.card_num
 
 class Dealer:
     """The person who directs the game, ask hi/low about the game and shows the cards por the player.
@@ -32,12 +14,37 @@ class Dealer:
         is_playing (boolean): Whether or not the game is being played.
         score (int): The score of the current game.
     """
-    
-        
-    def get_inputs(self):
-        """Ask the player for a higher or lower card."""
-        card = Card()
-        print(f"The card is {card.suffle()}")
+    def __init__(self):
+        """Create an instance of Dealer"""
+        self.points = 300
+        self.card = Card()
 
-dealer = Dealer()
-dealer.get_inputs()
+    def is_playing(self):
+        """This method run the game logic"""
+        
+        while self.game_over() != True:
+            print(f"The card is {self.card.card_num}")
+            self.card.shuffle()
+            self.hilo = input("Higher or lower? [h/l] ")
+            print(f"Next card was: {self.card.next_card()}")
+            if (self.card.card_num < self.card.last_card) and self.hilo == "l":
+                self.points += 100
+            elif (self.card.card_num > self.card.last_card) and self.hilo == "h":
+                self.points += 100
+            else:
+                self.points -= 75
+            print(f"Your score is :{self.points}")
+            self.card.next_card()
+            if self.points > 0:
+                play_again = input("Play again? [y/n] ")
+                if play_again.lower() != "y":
+                    print("See you later")
+                    break
+        
+    def game_over(self):
+        """This method checks the points"""
+        if self.points <= 0:
+            print("Game over")
+            return True
+        else:
+            return False

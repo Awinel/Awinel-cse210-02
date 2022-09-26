@@ -1,4 +1,4 @@
-from cse210-02.game.dealer import Dealer
-
+from cse210.game.dealer import Dealer
 
 dealer = Dealer()
+dealer.is_playing()
