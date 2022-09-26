@@ -1,6 +1,6 @@
 
 
-from cse210.game.card import Card
+from cse210-02.game.card import Card
 
 
 class Dealer:
